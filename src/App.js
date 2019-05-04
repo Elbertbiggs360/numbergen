@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 
 function App() {
@@ -8,17 +8,40 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Number Generator 'Phone' Edition
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <div className="container">
+        <div className="actions">
+          <input type="text" placeholder="Quantity of numbers to generate" />
+          <button>Generate</button>
+        </div>
+        <div className="list">
+          <header>
+            <span>Numbers generated</span>
+            <div className="sorter">
+              <span>Sort by:</span>
+              <select>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </select>
+            </div>
+          </header>
+          <div className="numbers" />
+        </div>
+        <div className="stats">
+          <span>Stats</span>
+          <div className="total">
+            <span>Total numbers generated: </span> #
+          </div>
+          <div className="min">
+            <span>Min number: </span> #
+          </div>
+          <div className="max">
+            <span>Max number: </span> #
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
