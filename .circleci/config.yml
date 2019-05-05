@@ -5,6 +5,12 @@ jobs:
     - image: circleci/node:10.15.3
 
     working_directory: ~/repo
+    
+    branches:
+      only:
+      - master
+      - develop
+      - /br-.*/
 
     steps:
         - attach_workspace:

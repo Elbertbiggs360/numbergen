@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/Elbertbiggs360/numbergen.svg?style=svg)](https://circleci.com/gh/Elbertbiggs360/numbergen)
+[![Coverage Status](https://coveralls.io/repos/github/Elbertbiggs360/numbergen/badge.svg?branch=master)](https://coveralls.io/github/Elbertbiggs360/numbergen?branch=master)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
