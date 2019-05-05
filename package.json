@@ -13,8 +13,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "coverage": "react-scripts test --env=jsdom --coverage",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+    "coverage": "export NODE_ENV=testing && react-scripts test --env=jsdom --coverage"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -29,14 +28,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/components/*.{js,jsx}",
-      "!<rootDir>/node_modules/",
-      "!<rootDir>/src/index.js",
-      "!<rootDir>/src/serviceWorker.js"
     ]
   }
 }

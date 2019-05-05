@@ -10,13 +10,26 @@ jobs:
       only:
       - master
       - develop
-      - /br-.*/
+      - /ch/.*/
 
     steps:
         - attach_workspace:
             at: ~/repo
 
         - checkout
+
+        # Setup Code Climate test-reporter
+        - run:
+            name: Setup Code Climate test-reporter
+            command: |
+                # download test reporter as a static binary
+                curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                chmod +x ./cc-test-reporter
+
+        - run:
+            name: Show the current branch
+            command: echo ${CIRCLE_BRANCH}
+
         - restore_cache:
             keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -31,8 +44,16 @@ jobs:
             - node_modules
             key: v1-dependencies-{{ checksum "package.json" }}
 
-        - run: yarn coverage
-        - run: yarn coveralls
+        - run:
+            name: Testing
+            command: |
+                # notify Code Climate of a pending test report using `before-build`
+                ./cc-test-reporter before-build
+                # run tests with coverage
+                yarn coverage
+                # upload coverage to code climate using `after-build`
+                ./cc-test-reporter format-coverage -t lcov ./coverage/lcov.info
+                ./cc-test-reporter upload-coverage
 
         - store_artifacts:
             path: ./coverage/lcov.info

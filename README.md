@@ -1,5 +1,5 @@
 [![CircleCI](https://circleci.com/gh/Elbertbiggs360/numbergen.svg?style=svg)](https://circleci.com/gh/Elbertbiggs360/numbergen)
-[![Coverage Status](https://coveralls.io/repos/github/Elbertbiggs360/numbergen/badge.svg?branch=master)](https://coveralls.io/github/Elbertbiggs360/numbergen?branch=master)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/274c01c59e3eb50f4659/test_coverage)](https://codeclimate.com/github/Elbertbiggs360/numbergen/test_coverage)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
