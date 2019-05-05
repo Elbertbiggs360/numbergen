@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.png';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -13,8 +13,8 @@ function App() {
       </header>
       <div className="container">
         <div className="actions">
-          <input type="text" placeholder="Quantity of numbers to generate" />
-          <button>Generate</button>
+          <input type="number" onChange={onChange} placeholder="Quantity of numbers to generate" />
+          <button onClick={generateNumber}>Generate</button>
         </div>
         <div className="list">
           <header>
@@ -44,6 +44,20 @@ function App() {
       </div>
     </div>
   );
+}
+
+const generateNumber = () => {
+  const {quantity} = this.state;
+
+}
+
+const onChange = event => {
+  event.preventDefault();
+  const quantity = event.target.value;
+  this.setState({
+    quantity
+  });
+
 }
 
 export default App;
