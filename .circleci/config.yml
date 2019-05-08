@@ -10,7 +10,7 @@ jobs:
       only:
       - master
       - develop
-      - /ch/.*/
+      - /ft-.*/
 
     steps:
         - attach_workspace:
