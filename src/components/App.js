@@ -5,7 +5,10 @@ import '../App.css';
 class App extends Component {
 
   state = {
-    quantity: 0,
+    quantity: 1,
+    numberlist: [],
+    error: false,
+    message: ""
   }
 
   render = () => {
@@ -55,7 +58,21 @@ class App extends Component {
   generateNumber = event => {
     event.preventDefault();
     const {quantity} = this.state;
-    console.log(quantity);
+
+    while (quantity <=1 || quantity > 10000) {
+      this.setState({
+        error: true,
+        message: "Invalid Number: Number should be greater than 0 and less than 10000"
+      });
+      return;
+    }
+    let number;
+    let numberlist = [];
+    for (let phoneNumber=0; phoneNumber<quantity;phoneNumber++) {
+      number = '0' + Math.floor(Math.random() * 900000000 + 100000000);
+      numberlist.push(number);
+    }
+    this.setState({numberlist});
   }
   
   onChange = event => {
