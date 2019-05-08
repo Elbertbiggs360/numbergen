@@ -15,7 +15,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "coverage": "export NODE_ENV=testing && react-scripts test --env=jsdom --coverage"
+    "coverage": "react-scripts test --env=jsdom --coverage --no-watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,7 +34,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/components/*.{js, jsx}",
+      "src/components/*.{js,jsx}",
       "!<rootDir>/node_modules/",
       "!<rootDir>/src/index.js",
       "!<rootDir>/src/serviceWorker.js"
