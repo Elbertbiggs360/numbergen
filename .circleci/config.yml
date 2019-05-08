@@ -44,16 +44,9 @@ jobs:
             - node_modules
             key: v1-dependencies-{{ checksum "package.json" }}
 
-        - run:
-            name: Testing
-            command: |
-                # notify Code Climate of a pending test report using `before-build`
-                ./cc-test-reporter before-build
-                # run tests with coverage
-                yarn coverage
-                # upload coverage to code climate using `after-build`
-                ./cc-test-reporter format-coverage -t lcov ./coverage/lcov.info
-                ./cc-test-reporter upload-coverage
+        # run tests!
+        - run: yarn coverage
+        - run: yarn coveralls
 
         - store_artifacts:
             path: ./coverage/lcov.info
