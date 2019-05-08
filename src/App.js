@@ -52,7 +52,8 @@ class App extends Component {
     );
   }
 
-  generateNumber = () => {
+  generateNumber = event => {
+    event.preventDefault();
     const {quantity} = this.state;
     console.log(quantity);
   }
