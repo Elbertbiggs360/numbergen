@@ -8,11 +8,14 @@ class App extends Component {
     quantity: 1,
     numberlist: [],
     error: false,
-    message: ""
+    message: "",
+    asc: "asc",
+    min: NaN,
+    max: NaN
   }
 
   render = () => {
-    const { numberlist } = this.state;
+    const { numberlist, min, max } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -23,7 +26,7 @@ class App extends Component {
         </header>
         <div className="container">
           <div className="actions">
-            <input type="number" onChange={this.onChange} placeholder="Quantity of numbers to generate" />
+            <input type="number" id="quantity" onChange={this.onChange} placeholder="Quantity of numbers to generate" />
             <button onClick={this.generateNumber}>Generate</button>
           </div>
           <div className="list">
@@ -31,7 +34,7 @@ class App extends Component {
               <span>Numbers generated</span>
               <div className="sorter">
                 <span>Sort by:</span>
-                <select>
+                <select onChange={this.onChange} id="sorter">
                   <option value="asc">Ascending</option>
                   <option value="desc">Descending</option>
                 </select>
@@ -66,7 +69,7 @@ class App extends Component {
 
   generateNumber = event => {
     event.preventDefault();
-    const {quantity} = this.state;
+    const {quantity, asc } = this.state;
 
     while (quantity <=1 || quantity > 10000) {
       this.setState({
@@ -81,15 +84,42 @@ class App extends Component {
       number = '0' + Math.floor(Math.random() * 900000000 + 100000000);
       numberlist.push(number);
     }
-    this.setState({numberlist});
+    this.sortNumbers(numberlist, asc);
+  }
+
+  sortNumbers = (numberlist, asc) => {
+    if(asc==="asc"){
+      numberlist.sort();
+    }
+    if(asc==="desc") {
+      numberlist.sort().reverse();
+    }
+    this.setState({
+      numberlist,
+      max: Math.max(...numberlist),
+      min: Math.min(...numberlist),
+      total: numberlist.length
+    });
   }
   
   onChange = event => {
     event.preventDefault();
-    const quantity = event.target.value;
-    this.setState({
-      quantity
-    });
+    switch(event.target.id){
+      case 'quantity':
+        return this.updateQuantity(event.target.value);
+      case 'sorter':
+        return this.updateSortOrder(event.target.value);
+      default:
+        return;
+    }
+  }
+
+  updateQuantity = quantity => {
+    this.setState({quantity});
+  }
+
+  updateSortOrder = asc => {
+    this.setState({asc});
   }
 }
 
