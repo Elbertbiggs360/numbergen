@@ -12,6 +12,7 @@ class App extends Component {
   }
 
   render = () => {
+    const { numberlist } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -36,7 +37,15 @@ class App extends Component {
                 </select>
               </div>
             </header>
-            <div className="numbers" />
+            <div className="numbers">
+              <ul className="numberlist">
+                {
+                  numberlist && numberlist.map(number => (
+                    <li className="listNumber" key={number}>{number}</li>
+                  ))
+                }
+              </ul>
+            </div>
           </div>
           <div className="stats">
             <span>Stats</span>
