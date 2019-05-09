@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import logo from '../logo.png';
 import '../App.css';
 import saveAs from 'file-saver';
+import Header from './Header';
 
 class App extends Component {
 
@@ -21,12 +21,7 @@ class App extends Component {
     const { numberlist, min, max, total, quantity, error, message, fileSaved } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Number Generator 'Phone' Edition
-          </p>
-        </header>
+        <Header />
         <div className="container">
           <div className="actions">
             <input type="number" id="quantity" onChange={this.onChange} value={quantity} placeholder="Quantity of numbers to generate" />
