@@ -83,11 +83,23 @@ describe('App Test', ()=> {
     expect(wrapper.debug()).toContain('0707070777');
   });
 
-  it('should save generated numbers when export button is clicked', async () => {
+  it('should save generated numbers when export button is clicked', () => {
     wrapper.setState({
       numberlist : ['0707070777', '0777070777']
     });
     FileSaver.saveAs.mockResolvedValue(true);
     wrapper.find('.export-btn').simulate('click', event);
+    expect(wrapper.state().fileSaved).toBe(true);
+  })
+
+  it('resets error message if quantity is correct', () => {
+    wrapper.setState({
+      quantity: 5,
+      error: true,
+      message: "error message"
+    })
+    expect(wrapper.state().error).toBe(true);
+    instance.generateNumber(event);
+    expect(wrapper.state().error).toBe(false);
   })
 });
