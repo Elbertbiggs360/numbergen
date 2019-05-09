@@ -13,11 +13,12 @@ class App extends Component {
     asc: "asc",
     min: "",
     max: "",
-    total: 0
+    total: 0,
+    fileSaved: false
   }
 
   render = () => {
-    const { numberlist, min, max, total, quantity } = this.state;
+    const { numberlist, min, max, total, quantity, error, message, fileSaved } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -29,6 +30,9 @@ class App extends Component {
         <div className="container">
           <div className="actions">
             <input type="number" id="quantity" onChange={this.onChange} value={quantity} placeholder="Quantity of numbers to generate" />
+            {
+              error && <span className="error">{message}</span>
+            }
             <button onClick={this.generateNumber}>Generate</button>
           </div>
           <div className="list">
@@ -43,6 +47,9 @@ class App extends Component {
               </div>
               <div className="export">
                 <button onClick={this.exportNumbers} className="export-btn">Export as CSV</button>
+                {
+                  fileSaved && <span>File Saved Successfully!</span>
+                }
               </div>
             </header>
             <div className="numbers">
@@ -74,7 +81,7 @@ class App extends Component {
 
   generateNumber = event => {
     event.preventDefault();
-    const {quantity, asc } = this.state;
+    const {quantity, error, message } = this.state;
 
     while (quantity <=1 || quantity > 10000) {
       this.setState({
@@ -83,6 +90,7 @@ class App extends Component {
       });
       return;
     }
+    error && message.length && this.setState({error: false, message: "", fileSaved: false});
     let number;
     let numberlist = [];
     for (let phoneNumber=0; phoneNumber<quantity;phoneNumber++) {
@@ -124,6 +132,7 @@ class App extends Component {
           this.updateSortOrder(event.target.value);
           this.sortNumbers();
         }
+        break;
       default:
         return;
     }
@@ -140,7 +149,8 @@ class App extends Component {
   exportNumbers = event => {
     event.preventDefault();
     const { numberlist } = this.state;
-    return numberlist.length && saveAs(new Blob(numberlist, { type: "text/csv;charset=utf-8" }), 'phoneNumbers.csv');
+    const generateFile = new Promise(() => {saveAs(new Blob(numberlist, { type: "text/csv;charset=utf-8" }), 'phoneNumbers.csv')});
+    generateFile.then(this.setState({fileSaved: true}));
   };
 }
 
