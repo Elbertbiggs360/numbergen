@@ -25,14 +25,43 @@ describe('App Test', ()=> {
 
 
   it('should set quantity', async () => {
-    event.target = {value: 1000};
+    event.target = {id: "quantity", value: 1000};
     await instance.onChange(event);
     expect(wrapper.state().quantity).toBe(1000);
   });
 
-  it('should generate phone numbers', () => {
+  it('should set sorting order to asc', async () => {
+    event.target = {id: "sorter", value: "asc"};
+    await instance.onChange(event);
+    expect(wrapper.state().asc).toBe("asc");
+  });
+
+  it('should set sorting order to desc', async () => {
+    event.target = {id: "sorter", value: "desc"};
+    await instance.onChange(event);
+    expect(wrapper.state().asc).toBe("desc");
+  });
+
+  it('should sort numbers in descending order', async () => {
+    const desc_array = [20, 14, 50];
+    const reversed_sort = desc_array.sort().reverse();
+    wrapper.setState({
+      numberlist : desc_array
+    });
+    event.target = {id: "sorter", value: "desc"};
+    instance.sortNumbers(desc_array, "desc");
+    expect(wrapper.state().numberlist).toEqual(reversed_sort);
+  });
+
+  it('should not set anything if id is not set', () => {
+    event.target = {id: "other", value: 1000};
+    instance.onChange(event);
+    expect(wrapper.state().quantity).toBe(1);
+  });
+
+  it('should generate phone numbers', async () => {
     wrapper.setState({quantity: 10});
-    instance.generateNumber(event);
+    await instance.generateNumber(event);
     const state = wrapper.state();
     expect(state.quantity).toEqual(10);
     expect(state.numberlist.length).toEqual(10);
