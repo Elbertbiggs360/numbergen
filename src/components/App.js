@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../logo.png';
 import '../App.css';
+import saveAs from 'file-saver';
 
 class App extends Component {
 
@@ -39,6 +40,9 @@ class App extends Component {
                   <option value="asc">Ascending</option>
                   <option value="desc">Descending</option>
                 </select>
+              </div>
+              <div className="export">
+                <button onClick={this.exportNumbers} className="export-btn">Export as CSV</button>
               </div>
             </header>
             <div className="numbers">
@@ -115,8 +119,11 @@ class App extends Component {
       case 'quantity':
         return this.updateQuantity(event.target.value);
       case 'sorter':
-        this.updateSortOrder(event.target.value);
-        this.sortNumbers();
+        const { asc } = this.state;
+        if(asc !== event.target.value){
+          this.updateSortOrder(event.target.value);
+          this.sortNumbers();
+        }
       default:
         return;
     }
@@ -129,6 +136,12 @@ class App extends Component {
   updateSortOrder = asc => {
     this.setState({asc});
   }
+
+  exportNumbers = event => {
+    event.preventDefault();
+    const { numberlist } = this.state;
+    return numberlist.length && saveAs(new Blob(numberlist, { type: "text/csv;charset=utf-8" }), 'phoneNumbers.csv');
+  };
 }
 
 export default App;

@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './App';
+import FileSaver from 'file-saver';
 
 configure({ adapter: new Adapter() });
+jest.mock('file-saver');
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -80,4 +82,12 @@ describe('App Test', ()=> {
     });
     expect(wrapper.debug()).toContain('0707070777');
   });
+
+  it('should save generated numbers when export button is clicked', async () => {
+    wrapper.setState({
+      numberlist : ['0707070777', '0777070777']
+    });
+    FileSaver.saveAs.mockResolvedValue(true);
+    wrapper.find('.export-btn').simulate('click', event);
+  })
 });
