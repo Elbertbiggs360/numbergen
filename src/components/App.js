@@ -5,18 +5,18 @@ import '../App.css';
 class App extends Component {
 
   state = {
-    quantity: 1,
+    quantity: "",
     numberlist: [],
     error: false,
     message: "",
     asc: "asc",
-    min: null,
-    max: null,
+    min: "",
+    max: "",
     total: 0
   }
 
   render = () => {
-    const { numberlist, min, max, total } = this.state;
+    const { numberlist, min, max, total, quantity } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -27,7 +27,7 @@ class App extends Component {
         </header>
         <div className="container">
           <div className="actions">
-            <input type="number" id="quantity" onChange={this.onChange} placeholder="Quantity of numbers to generate" />
+            <input type="number" id="quantity" onChange={this.onChange} value={quantity} placeholder="Quantity of numbers to generate" />
             <button onClick={this.generateNumber}>Generate</button>
           </div>
           <div className="list">
@@ -85,14 +85,20 @@ class App extends Component {
       number = '0' + Math.floor(Math.random() * 900000000 + 100000000);
       numberlist.push(number);
     }
-    this.sortNumbers(numberlist, asc);
+    return this.setState({
+      numberlist
+    }, async () => {
+      await this.sortNumbers();
+      this.setState({quantity: ''});
+    });
   }
 
-  sortNumbers = (numberlist, asc) => {
-    if(asc==="asc"){
+  sortNumbers = () => {
+    const { numberlist, asc } = this.state;
+    if(asc==="desc"){
       numberlist.sort();
     }
-    if(asc==="desc") {
+    if(asc==="asc") {
       numberlist.sort().reverse();
     }
     this.setState({
@@ -109,7 +115,8 @@ class App extends Component {
       case 'quantity':
         return this.updateQuantity(event.target.value);
       case 'sorter':
-        return this.updateSortOrder(event.target.value);
+        this.updateSortOrder(event.target.value);
+        this.sortNumbers();
       default:
         return;
     }

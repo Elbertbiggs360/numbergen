@@ -56,14 +56,13 @@ describe('App Test', ()=> {
   it('should not set anything if id is not set', () => {
     event.target = {id: "other", value: 1000};
     instance.onChange(event);
-    expect(wrapper.state().quantity).toBe(1);
+    expect(wrapper.state().quantity).toBe("");
   });
 
   it('should generate phone numbers', async () => {
     wrapper.setState({quantity: 10});
     await instance.generateNumber(event);
     const state = wrapper.state();
-    expect(state.quantity).toEqual(10);
     expect(state.numberlist.length).toEqual(10);
   });
 
