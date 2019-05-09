@@ -15,6 +15,9 @@ it('renders without crashing', () => {
 describe('App Test', ()=> {
   let wrapper;
   let instance;
+  let event = {
+    preventDefault: () => {}
+  };
   beforeEach(() => {
     wrapper = shallow(<App />);
     instance = wrapper.instance();
@@ -22,13 +25,31 @@ describe('App Test', ()=> {
 
 
   it('should set quantity', async () => {
-    const event = {
-      preventDefault: () => {},
-      target: {
-        value: 1000
-      }
-    };
+    event.target = {value: 1000};
     await instance.onChange(event);
     expect(wrapper.state().quantity).toBe(1000);
+  });
+
+  it('should generate phone numbers', () => {
+    wrapper.setState({quantity: 10});
+    instance.generateNumber(event);
+    const state = wrapper.state();
+    expect(state.quantity).toEqual(10);
+    expect(state.numberlist.length).toEqual(10);
+  });
+
+  it('should set error if quantity is illegal', () => {
+    wrapper.setState({quantity: 100000});
+    instance.generateNumber(event);
+    const state = wrapper.state();
+    expect(state.error).toBe(true);
+    expect(state.message).toEqual("Invalid Number: Number should be greater than 0 and less than 10000");
+  });
+
+  it('should show generated numbers', () => {
+    wrapper.setState({
+      numberlist : ['0707070777', '0777070777']
+    });
+    expect(wrapper.debug()).toContain('0707070777');
   });
 });
