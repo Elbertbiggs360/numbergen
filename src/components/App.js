@@ -10,12 +10,13 @@ class App extends Component {
     error: false,
     message: "",
     asc: "asc",
-    min: NaN,
-    max: NaN
+    min: null,
+    max: null,
+    total: 0
   }
 
   render = () => {
-    const { numberlist, min, max } = this.state;
+    const { numberlist, min, max, total } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -53,13 +54,13 @@ class App extends Component {
           <div className="stats">
             <span>Stats</span>
             <div className="total">
-              <span>Total numbers generated: </span> #
+              <span>Total numbers generated: </span> {total}
             </div>
             <div className="min">
-              <span>Min number: </span> #
+              <span>Min number: </span> {min}
             </div>
             <div className="max">
-              <span>Max number: </span> #
+              <span>Max number: </span> {max}
             </div>
           </div>
         </div>
