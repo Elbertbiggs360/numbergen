@@ -6,6 +6,7 @@ import Sorter from './Sorter';
 import Export from './Export';
 import Numberlist from './Numberlist';
 import Stats from './Stats';
+import Actions from './Actions';
 
 class App extends Component {
 
@@ -27,13 +28,13 @@ class App extends Component {
       <div className="App">
         <Header />
         <div className="container">
-          <div className="actions">
-            <input type="number" id="quantity" onChange={this.onChange} value={quantity} placeholder="Quantity of numbers to generate" />
-            {
-              error && <span className="error">{message}</span>
-            }
-            <button onClick={this.generateNumber}>Generate</button>
-          </div>
+          <Actions
+            onChange={this.onChange}
+            generateNumber={this.generateNumber}
+            quantity={quantity}
+            error={error}
+            message={message}
+          />
           <div className="list">
             <header>
               <span>Numbers generated</span>
