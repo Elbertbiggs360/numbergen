@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import '../App.css';
 import saveAs from 'file-saver';
 import Header from './Header';
-import Sorter from './Sorter'
+import Sorter from './Sorter';
+import Export from './Export';
 
 class App extends Component {
 
@@ -37,12 +38,10 @@ class App extends Component {
               <Sorter
                 onChange={this.onChange}
               />
-              <div className="export">
-                <button onClick={this.exportNumbers} className="export-btn">Export as CSV</button>
-                {
-                  fileSaved && <span>File Saved Successfully!</span>
-                }
-              </div>
+              <Export
+                onClick={this.exportNumbers}
+                fileSaved={fileSaved}
+              />
             </header>
             <div className="numbers">
               <ul className="numberlist">

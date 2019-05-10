@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { configure, shallow } from 'enzyme';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import App from './App';
 import FileSaver from 'file-saver';
@@ -83,12 +83,13 @@ describe('App Test', ()=> {
   });
 
   it('should save generated numbers when export button is clicked', () => {
-    wrapper.setState({
+    const mountedwrapper = mount(<App />);
+    mountedwrapper.setState({
       numberlist : ['0707070777', '0777070777']
     });
     FileSaver.saveAs.mockResolvedValue(true);
-    wrapper.find('.export-btn').simulate('click', event);
-    expect(wrapper.state().fileSaved).toBe(true);
+    mountedwrapper.find('.export-btn').simulate('click', event);
+    expect(mountedwrapper.state().fileSaved).toBe(true);
   })
 
   it('resets error message if quantity is correct', () => {
