@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import logo from '../logo.png';
 import '../App.css';
 import saveAs from 'file-saver';
+import Header from './Header';
+import Sorter from './Sorter';
+import Export from './Export';
+import Numberlist from './Numberlist';
+import Stats from './Stats';
+import Actions from './Actions';
 
 class App extends Component {
 
@@ -11,8 +16,8 @@ class App extends Component {
     error: false,
     message: "",
     asc: "asc",
-    min: "",
-    max: "",
+    min: undefined,
+    max: undefined,
     total: 0,
     fileSaved: false
   }
@@ -21,59 +26,33 @@ class App extends Component {
     const { numberlist, min, max, total, quantity, error, message, fileSaved } = this.state;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Number Generator 'Phone' Edition
-          </p>
-        </header>
+        <Header />
         <div className="container">
-          <div className="actions">
-            <input type="number" id="quantity" onChange={this.onChange} value={quantity} placeholder="Quantity of numbers to generate" />
-            {
-              error && <span className="error">{message}</span>
-            }
-            <button onClick={this.generateNumber}>Generate</button>
-          </div>
+          <Actions
+            onChange={this.onChange}
+            generateNumber={this.generateNumber}
+            quantity={quantity}
+            error={error}
+            message={message}
+          />
           <div className="list">
             <header>
               <span>Numbers generated</span>
-              <div className="sorter">
-                <span>Sort by:</span>
-                <select onChange={this.onChange} id="sorter">
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
-                </select>
-              </div>
-              <div className="export">
-                <button onClick={this.exportNumbers} className="export-btn">Export as CSV</button>
-                {
-                  fileSaved && <span>File Saved Successfully!</span>
-                }
-              </div>
+              <Sorter
+                onChange={this.onChange}
+              />
+              <Export
+                onClick={this.exportNumbers}
+                fileSaved={fileSaved}
+              />
             </header>
-            <div className="numbers">
-              <ul className="numberlist">
-                {
-                  numberlist && numberlist.map(number => (
-                    <li className="listNumber" key={number}>{number}</li>
-                  ))
-                }
-              </ul>
-            </div>
+            <Numberlist numberlist={numberlist}/>
           </div>
-          <div className="stats">
-            <span>Stats</span>
-            <div className="total">
-              <span>Total numbers generated: </span> {total}
-            </div>
-            <div className="min">
-              <span>Min number: </span> {min}
-            </div>
-            <div className="max">
-              <span>Max number: </span> {max}
-            </div>
-          </div>
+          <Stats
+            total={total}
+            min={min}
+            max={max}
+          />
         </div>
       </div>
     );
