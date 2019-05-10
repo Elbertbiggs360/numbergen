@@ -4,6 +4,7 @@ import saveAs from 'file-saver';
 import Header from './Header';
 import Sorter from './Sorter';
 import Export from './Export';
+import Numberlist from './Numberlist';
 
 class App extends Component {
 
@@ -43,15 +44,7 @@ class App extends Component {
                 fileSaved={fileSaved}
               />
             </header>
-            <div className="numbers">
-              <ul className="numberlist">
-                {
-                  numberlist && numberlist.map(number => (
-                    <li className="listNumber" key={number}>{number}</li>
-                  ))
-                }
-              </ul>
-            </div>
+            <Numberlist numberlist={numberlist}/>
           </div>
           <div className="stats">
             <span>Stats</span>

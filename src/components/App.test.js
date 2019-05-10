@@ -9,14 +9,17 @@ configure({ adapter: new Adapter() });
 jest.mock('file-saver');
 
 describe('App Test', ()=> {
-  let wrapper;
-  let instance;
+  let wrapper, instance, mountedwrapper;
   let event = {
     preventDefault: () => {}
   };
   beforeEach(() => {
     wrapper = shallow(<App />);
     instance = wrapper.instance();
+    mountedwrapper = mount(<App />);
+    mountedwrapper.setState({
+      numberlist : ['0707070777', '0777070777']
+    });
   });
 
   it('renders without crashing', () => {
@@ -76,17 +79,10 @@ describe('App Test', ()=> {
   });
 
   it('should show generated numbers', () => {
-    wrapper.setState({
-      numberlist : ['0707070777', '0777070777']
-    });
-    expect(wrapper.debug()).toContain('0707070777');
+    expect(mountedwrapper.find('ul').text()).toContain('0707070777');
   });
 
   it('should save generated numbers when export button is clicked', () => {
-    const mountedwrapper = mount(<App />);
-    mountedwrapper.setState({
-      numberlist : ['0707070777', '0777070777']
-    });
     FileSaver.saveAs.mockResolvedValue(true);
     mountedwrapper.find('.export-btn').simulate('click', event);
     expect(mountedwrapper.state().fileSaved).toBe(true);
