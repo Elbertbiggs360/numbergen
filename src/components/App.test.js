@@ -8,12 +8,6 @@ import FileSaver from 'file-saver';
 configure({ adapter: new Adapter() });
 jest.mock('file-saver');
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
-
 describe('App Test', ()=> {
   let wrapper;
   let instance;
@@ -25,6 +19,11 @@ describe('App Test', ()=> {
     instance = wrapper.instance();
   });
 
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<App />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
 
   it('should set quantity', async () => {
     event.target = {id: "quantity", value: 1000};

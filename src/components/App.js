@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import saveAs from 'file-saver';
 import Header from './Header';
+import Sorter from './Sorter'
 
 class App extends Component {
 
@@ -33,13 +34,9 @@ class App extends Component {
           <div className="list">
             <header>
               <span>Numbers generated</span>
-              <div className="sorter">
-                <span>Sort by:</span>
-                <select onChange={this.onChange} id="sorter">
-                  <option value="asc">Ascending</option>
-                  <option value="desc">Descending</option>
-                </select>
-              </div>
+              <Sorter
+                onChange={this.onChange}
+              />
               <div className="export">
                 <button onClick={this.exportNumbers} className="export-btn">Export as CSV</button>
                 {
