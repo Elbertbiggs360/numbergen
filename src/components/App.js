@@ -5,6 +5,7 @@ import Header from './Header';
 import Sorter from './Sorter';
 import Export from './Export';
 import Numberlist from './Numberlist';
+import Stats from './Stats';
 
 class App extends Component {
 
@@ -14,8 +15,8 @@ class App extends Component {
     error: false,
     message: "",
     asc: "asc",
-    min: "",
-    max: "",
+    min: undefined,
+    max: undefined,
     total: 0,
     fileSaved: false
   }
@@ -46,18 +47,11 @@ class App extends Component {
             </header>
             <Numberlist numberlist={numberlist}/>
           </div>
-          <div className="stats">
-            <span>Stats</span>
-            <div className="total">
-              <span>Total numbers generated: </span> {total}
-            </div>
-            <div className="min">
-              <span>Min number: </span> {min}
-            </div>
-            <div className="max">
-              <span>Max number: </span> {max}
-            </div>
-          </div>
+          <Stats
+            total={total}
+            min={min}
+            max={max}
+          />
         </div>
       </div>
     );
